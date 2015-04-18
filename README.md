@@ -1,6 +1,12 @@
 # CSE135
 This is a Shopping Cart Application
 
-The top level works as an eclipse workspace.  The 'public_html_spring' directory is an eclipse project.  The easiest way to get the Spring framework working is to download the Eclipse-based Spring Tool Suite: http://spring.io/tools/sts.
+Removed the java project and have added a laravel project called Aristocart.  Steps to set this up:
 
-Then after doing this, make the workspace your root of the git repo, and open the project "public_html_spring".
+Install the latest version of xampp on either your computer or VM.  I just did it on my computer.
+
+When it has finished installing, you will need to clone this repo into the root of the installation directory of xampp.  (There should be a folder called htdocs in this directory as well.)  
+
+Copy everything from the htdocs folder into the new repo folder, and rename this folder htdocs, replacing the old htdocs folder.  You will want to git ignore all of these files except for the Aristocart directory.
+
+From the xampp control panel, start apache and go to localhost/Aristocart/public, and you should get the laravel welcome page.  (You can edit the xampp apache httpd config file to point straight to the Aristocart/public directory so that you can just type localhost instead of adding the "Aristocart/public").
