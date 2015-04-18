@@ -1,2 +1,0 @@
-INDEX VERSION 1.127+/home/cse135/projects/ShoppingApp/.metadata/.plugins/org.eclipse.jdt.core
-2963961193.index
