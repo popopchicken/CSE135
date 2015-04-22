@@ -38,13 +38,14 @@ class LoginController extends Controller {
 
 	public function signUp()
 	{
+		//TODO: Logic for signing up needs to be added here.
 		return view('sign-up');
 	}
 
-	public function login(LoginFormRequest $request)
+	public function login()
 	{
-		return Response::make('Login successful!');
-		//return view('login');
+		//TODO: Logic for logging in needs to be added here.
+		return view('store/categories');
 	}
 
 }

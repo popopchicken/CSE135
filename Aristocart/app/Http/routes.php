@@ -11,9 +11,17 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
+//Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
+
+Route::post('sign-up', 'LoginController@signUp');
+Route::get('sign-up', 'LoginController@signUp');
+Route::get('login', 'LoginController@index');
+Route::post('login', 'LoginController@login');
+
+Route::get('store/categories', '\Store\CategoryController@index');
+Route::post('store/categories', '\Store\CategoryController@addCategory');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -5,7 +5,9 @@
 	<body>
 		<h1> Sign Up </h1>
 		<br />
-		<form method="POST">
+		<form method="POST" role="form" action="{{ url('sign-up') }}">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 			<label for="user_name">User Name</label>
 			<input type="text" name="user_name">
 			<br />
