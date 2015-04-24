@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\HTTP\Requests\LoginFormRequest;
+use App\Models\User;
 use Response;
 use View;
 
@@ -44,6 +45,11 @@ class LoginController extends Controller {
 
 	public function login()
 	{
+		$user = new User();
+		$user->name = 'Tyler';
+		$user->age = 22;
+		$user->state_id = 1;
+		$user->addUser();
 		//TODO: Logic for logging in needs to be added here.
 		return view('store/categories');
 	}
