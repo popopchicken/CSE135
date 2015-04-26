@@ -50,7 +50,7 @@ class LoginController extends Controller {
 		$user = new User();
 		//TODO: Add user data here
 		//Ex: $user->name = "Tyler";
-		$user->addUser();
+		//$user->addUser();
 		//TODO: Logic for logging in needs to be added here.
 		return view('store/categories');
 	}
