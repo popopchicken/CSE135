@@ -1,12 +1,9 @@
 <?php namespace App\Http\Controllers;
-
-use App\HTTP\Requests\LoginFormRequest;
+use Request;
 use App\Models\User;
 use Response;
 use View;
-
 class LoginController extends Controller {
-
 	/*
 	|--------------------------------------------------------------------------
 	| Signup Controller
@@ -16,7 +13,6 @@ class LoginController extends Controller {
 	| is configured to only allow guests.
 	|
 	*/
-
 	/**
 	 * Create a new controller instance.
 	 *
@@ -26,7 +22,6 @@ class LoginController extends Controller {
 	{
 		$this->middleware('guest');
 	}
-
 	/**
 	 * Show the sign up screen to the user.
 	 *
@@ -36,22 +31,19 @@ class LoginController extends Controller {
 	{
 		return view('login');
 	}
-
 	public function signUp()
 	{
 		//TODO: Logic for signing up needs to be added here.
+		$user_name = Request::input('user_name');
 		return view('sign-up');
 	}
-
 	public function login()
 	{
 		$user = new User();
-		$user->name = 'Tyler';
-		$user->age = 22;
-		$user->state_id = 1;
-		$user->addUser();
+		//TODO: Add user data here
+		//Ex: $user->name = "Tyler";
+		//$user->addUser();
 		//TODO: Logic for logging in needs to be added here.
 		return view('store/categories');
 	}
-
 }
