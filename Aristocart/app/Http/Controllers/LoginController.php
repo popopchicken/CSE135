@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Request;
+use App\HTTP\Requests\LoginFormRequest;
 use App\Models\User;
 use Response;
 use View;
@@ -40,16 +40,15 @@ class LoginController extends Controller {
 	public function signUp()
 	{
 		//TODO: Logic for signing up needs to be added here.
-		$user_name = Request::input('user_name');
-
 		return view('sign-up');
 	}
 
 	public function login()
 	{
 		$user = new User();
-		//TODO: Add user data here
-		//Ex: $user->name = "Tyler";
+		$user->name = 'Tyler';
+		$user->age = 22;
+		$user->state_id = 1;
 		$user->addUser();
 		//TODO: Logic for logging in needs to be added here.
 		return view('store/categories');
