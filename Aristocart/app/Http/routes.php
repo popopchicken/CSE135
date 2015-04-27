@@ -14,8 +14,8 @@
 //Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
 
+Route::get('sign-up', 'SignUpController@index');
 Route::post('sign-up', 'LoginController@signUp');
-Route::get('sign-up', 'LoginController@signUp');
 Route::get('/', 'LoginController@index');
 Route::get('login', 'LoginController@index');
 Route::post('login', 'LoginController@login');

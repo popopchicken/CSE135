@@ -33,9 +33,25 @@ class LoginController extends Controller {
 	}
 	public function signUp()
 	{
-		//TODO: Logic for signing up needs to be added here.
 		$user_name = Request::input('user_name');
-		return view('sign-up');
+		$role = Request::input('role');
+		$age = Request::input('age');
+		$state = Request::input('state');
+
+		$user = new User();
+		$user->name = $user_name;
+		$user->role = $role;
+		$user->age = $age;
+		$user->state_id = $state;
+		//var_dump($user);
+
+		if($state == 0){
+			return view('sign-up');
+		}
+		else{
+			$user->addUser();
+			return view('login');
+		}
 	}
 	public function login()
 	{

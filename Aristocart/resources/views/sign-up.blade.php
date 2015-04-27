@@ -31,8 +31,10 @@
 			
 			<label for="state">State</label>
 			<select name="state">
-				<option value="CA">California</option>
-				<option value="customer">Arizona</option>
+				<option value="0"></option>
+				@foreach($states as $key => $state)
+					<option value="{{$key}}">{{$state}}</option>
+				@endforeach
 			</select>
 			<br />
 			<br />
