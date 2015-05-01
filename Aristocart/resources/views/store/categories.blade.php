@@ -21,5 +21,9 @@
 			<input type="text" name="add_category">
 			<input type="submit" value="Add Category">
 		</form>
+		<br />
+		<br />
+		<br />
+		<a href="{{url('logout')}}">Logout</a>
 	</body>
 </html>

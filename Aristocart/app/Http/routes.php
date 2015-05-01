@@ -19,6 +19,7 @@ Route::post('sign-up', 'LoginController@signUp');
 Route::get('/', 'LoginController@index');
 Route::get('login', 'LoginController@index');
 Route::post('login', 'LoginController@login');
+Route::get('logout', 'LoginController@logout');
 
 $router->get('store/categories', 'Store\CategoryController@index');	//Must use this for subfolders (Look at CategoryController for more config)
 $router->post('store/categories', 'Store\CategoryController@addCategory');	//Must use this for subfolders

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Store;	//For subfolders use the proper namespace
 
 use App\Http\Controllers\Controller;		//Have to redefine where Controller is
+use App\Models\Authenticate;
 use App\HTTP\Requests\LoginFormRequest;
 use Response;
 use View;
@@ -34,6 +35,7 @@ class CategoryController extends Controller {
 	 */
 	public function index()
 	{
+		Authenticate::checkExpiredLogin();
 		return view('store/categories');
 	}
 

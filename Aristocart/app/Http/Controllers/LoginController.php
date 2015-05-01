@@ -1,8 +1,12 @@
 <?php namespace App\Http\Controllers;
 use Request;
 use App\Models\User;
+use App\Models\Authenticate;
+use Illuminate\Http\RedirectResponse;
 use Response;
 use View;
+use URL;
+
 class LoginController extends Controller {
 	/*
 	|--------------------------------------------------------------------------
@@ -29,7 +33,12 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
-		return view('login');
+		if(!Authenticate::checkRole()){
+			return view('login');
+		}
+		else{
+			return redirect('store/categories');
+		}
 	}
 	public function signUp()
 	{
@@ -55,11 +64,12 @@ class LoginController extends Controller {
 	}
 	public function login()
 	{
-		$user = new User();
-		//TODO: Add user data here
-		//Ex: $user->name = "Tyler";
-		//$user->addUser();
-		//TODO: Logic for logging in needs to be added here.
-		return view('store/categories');
+		Authenticate::login(Request::input('user_name'));
+		return redirect('store/categories');
+	}
+
+	public function logout(){
+		Authenticate::logout();
+		return redirect('login');
 	}
 }
