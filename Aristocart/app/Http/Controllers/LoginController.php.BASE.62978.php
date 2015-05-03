@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
+
 use Request;
 use App\Models\User;
-use App\Models\Authenticate;
-use Illuminate\Http\RedirectResponse;
 use Response;
 use View;
-use URL;
 
 class LoginController extends Controller {
+
 	/*
 	|--------------------------------------------------------------------------
 	| Signup Controller
@@ -17,6 +16,7 @@ class LoginController extends Controller {
 	| is configured to only allow guests.
 	|
 	*/
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -26,6 +26,7 @@ class LoginController extends Controller {
 	{
 		$this->middleware('guest');
 	}
+
 	/**
 	 * Show the sign up screen to the user.
 	 *
@@ -33,30 +34,25 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
-		if(!Authenticate::checkRole()){
-			return view('login');
-		}
-		else{
-			return redirect('home');
-		}
-	}
-	
-	public function login()
-	{
-<<<<<<< HEAD
-		Authenticate::login(Request::input('user_name'));
-		return redirect('home');
-=======
-		$errors = Authenticate::login(Request::input('user_name'));
-		if(!empty($errors)){
-			return redirect('login')->with('errors', $errors);
-		}
-		return redirect('store/categories');
->>>>>>> a8d55e08d1cde88e3db534ebc223ff1e4c695755
+		return view('login');
 	}
 
-	public function logout(){
-		Authenticate::logout();
-		return redirect('login');
+	public function signUp()
+	{
+		//TODO: Logic for signing up needs to be added here.
+		$user_name = Request::input('user_name');
+
+		return view('sign-up');
 	}
+
+	public function login()
+	{
+		$user = new User();
+		//TODO: Add user data here
+		//Ex: $user->name = "Tyler";
+		$user->addUser();
+		//TODO: Logic for logging in needs to be added here.
+		return view('store/categories');
+	}
+
 }
