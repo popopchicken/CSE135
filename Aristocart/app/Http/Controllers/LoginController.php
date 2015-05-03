@@ -40,28 +40,7 @@ class LoginController extends Controller {
 			return redirect('store/categories');
 		}
 	}
-	public function signUp()
-	{
-		$user_name = Request::input('user_name');
-		$role = Request::input('role');
-		$age = Request::input('age');
-		$state = Request::input('state');
-
-		$user = new User();
-		$user->name = $user_name;
-		$user->role = $role;
-		$user->age = $age;
-		$user->state_id = $state;
-		//var_dump($user);
-
-		if($state == 0){
-			return view('sign-up');
-		}
-		else{
-			$user->addUser();
-			return view('login');
-		}
-	}
+	
 	public function login()
 	{
 		Authenticate::login(Request::input('user_name'));
