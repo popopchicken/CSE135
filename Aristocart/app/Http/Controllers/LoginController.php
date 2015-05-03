@@ -37,14 +37,14 @@ class LoginController extends Controller {
 			return view('login');
 		}
 		else{
-			return redirect('store/categories');
+			return redirect('home');
 		}
 	}
 	
 	public function login()
 	{
 		Authenticate::login(Request::input('user_name'));
-		return redirect('store/categories');
+		return redirect('home');
 	}
 
 	public function logout(){

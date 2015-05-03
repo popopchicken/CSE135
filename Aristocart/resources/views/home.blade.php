@@ -1,17 +1,17 @@
-@extends('app')
-
-@section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
-
-				<div class="panel-body">
-					You are logged in!
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
+<html>
+	<head>
+		<title> Home </title>
+	</head>
+	<body>
+		You are logged in!
+		<a class="navbar-brand" href="#">Aristocart</a> <br />
+		Home <br />
+		<a href="{{ url('/store/categories') }}"> Categories </a> <br/>
+		<a href="{{ url('/store/products') }}"> Products </a> <br />
+		<a href="#"> Products Browsing </a> <br />
+		<a href="#"> Product Order </a> <br />
+		<a href="#"> Buy Shopping Cart </a> <br />
+		<a href="#"> Confirmation </a> <br />
+		<a href="{{ url('/logout') }}"> Logout </a> <br/>
+	</body>
+</html>
