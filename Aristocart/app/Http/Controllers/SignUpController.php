@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use View;
+use Request;
+use App\Models\User;
 
 class SignUpController extends Controller {
 
@@ -47,6 +49,42 @@ class SignUpController extends Controller {
 			"49" => "WI","50" => "WY",
 			);
 		return View::make('sign-up')->with('states', $states);
+	}
+
+	public function signUp()
+	{
+		$errors = array();
+		$data = array();
+		$user_name = Request::input('user_name');
+		$role = Request::input('role');
+		$age = Request::input('age');
+		$state = Request::input('state');
+
+		$user = new User();
+		$user->name = $user_name;
+		$user->role = $role;
+		$user->age = $age;
+		$user->state_id = $state;
+		//var_dump($user);
+
+		$errors = $user->validateUserInput();
+		
+		if(!empty($errors)){
+			$data['result'] = 'Failed';
+			$data['errors'] = $errors;
+			return View::make('sign-up-results')->with('data', $data);
+		}
+		if(!$user->addUser()){
+			$errors['name'] = 'The name you have provided has already been taken';
+		}
+		if(!empty($errors)){
+			$data['result'] = 'Failed';
+			$data['errors'] = $errors;
+			return View::make('sign-up-results')->with('data', $data);
+		}
+
+		$data['result'] = 'Successful';
+		return view('sign-up-results')->with('data', $data);
 	}
 
 	

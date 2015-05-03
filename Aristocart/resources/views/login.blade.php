@@ -6,7 +6,7 @@
 		<h1>Login</h1>
 		<br />
 
-		@foreach ($errors->all() as $error)
+		@foreach ($errors as $error)
         <p class="error">{{ $error }}</p>
     	@endforeach
 		
