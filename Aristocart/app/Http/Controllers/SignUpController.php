@@ -67,16 +67,22 @@ class SignUpController extends Controller {
 		$user->state_id = $state;
 		//var_dump($user);
 
-		if($state == 0){
-			$errors['state'] = 'You did not select a valid state';
-		}
+		$errors = $user->validateUserInput();
 		
 		if(!empty($errors)){
 			$data['result'] = 'Failed';
 			$data['errors'] = $errors;
 			return View::make('sign-up-results')->with('data', $data);
 		}
-		$user->addUser();
+		if(!$user->addUser()){
+			$errors['name'] = 'The name you have provided has already been taken';
+		}
+		if(!empty($errors)){
+			$data['result'] = 'Failed';
+			$data['errors'] = $errors;
+			return View::make('sign-up-results')->with('data', $data);
+		}
+
 		$data['result'] = 'Successful';
 		return view('sign-up-results')->with('data', $data);
 	}
