@@ -6,20 +6,14 @@
 		<h1>Categories</h1>
 		<br />
 		<br />
-		<a href="#">Category 1</a>
-		<br />
-		<br />
-		<a href="#">Category 2</a>
-		<br />
-		<br />
-		<a href="#">Category 3</a>
-		<br />
-		<br />
+		
 		<form method="POST" role="form" action="{{ url('store/categories')}}">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
-			<label for="add_category">
-			<input type="text" name="add_category">
-			<input type="submit" value="Add Category">
+			<label for="cat_name">Add Category</label>
+			<input type="text" name="cat_name">
+			<label for="cat_description">Description</label>
+			<input type="text" name="cat_description">
+			<input type="submit" value="Add">
 		</form>
 		<br />
 		<br />
