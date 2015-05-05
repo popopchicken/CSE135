@@ -3,7 +3,7 @@
 		<title>Products</title>
 	</head>
 	<body>
-		@if($role == 'owner'){
+		@if($data['role'] == 'owner'){
 			<form method="POST" role="form" action="{{ url('sign-up') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -18,7 +18,7 @@
 					<br />
 					<label for="category">Category</label>
 					<select name="category">
-						@foreach($categories as $key => $category)
+						@foreach($data['categories'] as $key => $category)
 							<option value="{{ $key }}">{{ $category }}</option>
 						@endforeach
 					</select>

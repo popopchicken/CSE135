@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;		//Have to redefine where Controller is
+use App\Models\Category;
 use App\Models\Authenticate;
 use Request;
 use App\Models\User;
@@ -22,14 +23,23 @@ class ProductsController extends Controller {
 	public function index()
 	{
 		$role = Authenticate::checkRole();
-		if(!$role){
+		if(!$role)
+		{
 			$role = 'customer';
 		}
-		return view('store/products')->with('role', $role);
+
+		$categories = Category::getCategories();
+		$data['categories'] = $categories;
+		$data['role'] = $role;
+
+
+
+		return view('store/products')->with('data', $data);
 
 	}
 
-	public function addProduct(){
+	public function addProduct()
+	{
 		return view('store/products');
 	}
 }
