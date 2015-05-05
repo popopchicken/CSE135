@@ -24,6 +24,9 @@ Route::get('logout', 'LoginController@logout');
 $router->get('store/categories', 'Store\CategoryController@index');	//Must use this for subfolders (Look at CategoryController for more config)
 $router->post('store/categories', 'Store\CategoryController@addCategory');	//Must use this for subfolders
 
+$router->get('store/products', 'Store\ProductsController@index');
+$router->post('store/products', 'Store\ProductsController@addProduct');	
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
