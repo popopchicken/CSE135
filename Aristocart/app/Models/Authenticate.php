@@ -69,7 +69,12 @@ class Authenticate{
 			self::logout();
 			return true;
 		}
+		//TODO: Update user's last authenticated
 		return false;
+	}
+
+	public function updateLastAuthenticated(){
+		
 	}
 
 }

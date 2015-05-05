@@ -23,15 +23,11 @@ class ProductsController extends Controller {
 	public function index()
 	{
 		$role = Authenticate::checkRole();
-		if(!$role)
-		{
-			$role = 'customer';
-		}
 
 		$categories = Category::getCategories();
+		$data['selected_category'] = Request::input('selected_category');
 		$data['categories'] = $categories;
 		$data['role'] = $role;
-
 
 
 		return view('store/products')->with('data', $data);
