@@ -1,6 +1,6 @@
 <?php namespace App\Models;
 
-use  Illuminate\Database\DatabaseManager;
+use Illuminate\Database\DatabaseManager;
 use DB;
 use Session;
 
@@ -15,22 +15,12 @@ class Category {
 		return true;
 	}
 
-	public function deleteCategory(){
-		$delRow = DB::delete('delete from categories where name = ?', [$this->cat_name]);
-		return true;
-	}
-
-	public static function showCategories(){
-		$results = DB::select('select * from categories');
-		return $results;
-	}
-
-	public function checkDuplicate(){
-		$results = DB::select('select name from categories where name = ?', [$this->cat_name]);
-		if($results == false){
-			return false;
+	public static function getCategories(){
+		$categories = array();
+		$results = DB::select('SELECT * FROM categories');
+		foreach($results as $result){
+			$categories[$result->id] = $result->name;
 		}
-		return true;
+		return $categories;
 	}
-
 }
