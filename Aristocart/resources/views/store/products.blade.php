@@ -15,7 +15,7 @@
 			</ul>	
 		</div>
 			<div id="add-product" style="float:left; margin-left:20px">
-				<form method="POST" role="form" action="{{ url('sign-up') }}">
+				<form method="POST" role="form" action="{{ url('store/products') }}">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<label for="name">Item Name</label>
