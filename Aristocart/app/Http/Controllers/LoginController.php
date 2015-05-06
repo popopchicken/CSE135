@@ -43,10 +43,8 @@ class LoginController extends Controller {
 	
 	public function login()
 	{
-
 		Authenticate::login(Request::input('user_name'));
 		return redirect('home');
-
 		$errors = Authenticate::login(Request::input('user_name'));
 		if(!empty($errors)){
 			return redirect('login')->with('errors', $errors);

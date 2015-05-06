@@ -31,7 +31,7 @@ $router->delete('store/categories', 'Store\CategoryController@deleteCategories')
 //Route::delete('store/categories/{$name}', array('uses' => 'CategoryController@deleteCategories', 'as' => 'store/categories'))
 
 $router->get('store/products', 'Store\ProductsController@index');
-$router->post('store/products', 'Store\ProductsController@addProduct');	
+$router->post('store/products', 'Store\ProductsController@selectAction');	
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

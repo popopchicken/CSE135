@@ -20,11 +20,10 @@ class Authenticate{
 			}
 			$results = DB::select('SELECT users.id, roles.role_type from users INNER JOIN roles ON users.id = roles.user_id WHERE users.name = ?', [$name]);
 			if($results){
-				$time = date("Y-m-d H:i:s");
-				DB::update('UPDATE users SET last_authenticated = ?', [$time]);
-				var_dump($results[0]);
 				Session::put('user_id', $results[0]->id);
 				Session::put('user_role', $results[0]->role_type);
+				$time = date("Y-m-d H:i:s");
+				DB::update('UPDATE users SET last_authenticated = ? WHERE id = ?', [$time, Session::get('user_id')]);
 				return $errors;
 			}
 
@@ -69,12 +68,15 @@ class Authenticate{
 			self::logout();
 			return true;
 		}
-		//TODO: Update user's last authenticated
-		return false;
+		else{
+			self::updateLastAuthenticated();
+			return false;
+		}
 	}
 
-	public function updateLastAuthenticated(){
-		
+	public static function updateLastAuthenticated(){
+		$time = date("Y-m-d H:i:s");
+		DB::update('UPDATE users SET last_authenticated = ? WHERE id = ?', [$time, Session::get('user_id')]);
 	}
 
 }

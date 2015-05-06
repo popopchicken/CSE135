@@ -49,6 +49,7 @@ class User{
 	}
 
 	public function validateUserInput(){
+		$errors = array();
 		if(empty($this->state_id)){
 			$errors['state'] = 'You did not select a valid state';
 		}
