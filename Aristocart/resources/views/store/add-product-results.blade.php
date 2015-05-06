@@ -6,11 +6,11 @@
 		<h1> Product Add {{ $data['result'] }}</h1>
 		<br />
 		@if(!empty($data['errors']))
-		<!--<ul>
+		<ul>
 			@foreach ($data['errors'] as $error)
 				<li>{{ $error }}</li>
 			@endforeach 
-		</ul> -->
+		</ul>
 		<h2> Failure to insert new product. </h2>
 		@endif
 		<br />

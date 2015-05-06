@@ -45,7 +45,7 @@ class ProductsController extends Controller {
 				break;
 			case "addProduct":
 				$data['errors'] = self::addProduct();
-				if(empty($errors)){
+				if(empty($data['errors'])){
 					$data['result'] = 'Successful';
 				} else{
 					$data['result'] = 'Failed';
