@@ -20,6 +20,9 @@ Route::get('/', 'LoginController@index');
 Route::get('login', 'LoginController@index');
 Route::post('login', 'LoginController@login');
 Route::get('logout', 'LoginController@logout');
+Route::get('access-denied', function(){
+	return view('access-denied');
+});
 //Route::post('store/product-browsing', ProductBrowsingController)
 
 $router->get('store/categories', 'Store\CategoryController@index');	//Must use this for subfolders (Look at CategoryController for more config)
@@ -29,7 +32,19 @@ $router->post('store/categories', 'Store\CategoryController@selectAction');	//Mu
 //Route::delete('store/categories/{$name}', array('uses' => 'CategoryController@deleteCategories', 'as' => 'store/categories'))
 
 $router->get('store/products', 'Store\ProductsController@index');
-$router->post('store/products', 'Store\ProductsController@selectAction');	
+$router->post('store/products', 'Store\ProductsController@selectAction');
+
+$router->get('store/product-browsing', 'Store\ProductBrowsingController@index');
+$router->post('store/product-browsing', 'Store\ProductBrowsingController@selectAction');
+
+$router->get('store/product-order', 'Store\ProductOrderController@index');
+$router->post('store/product-order', 'Store\ProductOrderController@selectAction');
+
+$router->get('store/buy-shopping-cart', 'Store\BuyShoppingCartController@index');
+$router->post('store/buy-shopping-cart', 'Store\BuyShoppingCartController@buyCart');
+
+$router->get('store/confirmation-page', 'Store\BuyShoppingCartController@confirmPage');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

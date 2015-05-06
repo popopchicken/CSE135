@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Models\Authenticate;
 use App\Models\Product;
 use Request;
+use Session;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Response;
@@ -24,6 +25,9 @@ class ProductsController extends Controller {
 	*/
 	public function index()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		$data = self::setPreliminaryValues();
 		return view('store/products')->with('data', $data);
 	}
@@ -37,11 +41,11 @@ class ProductsController extends Controller {
 				return view('store/products')->with('data', $data);
 				break;
 			case "search-browse":
-				
+
 				break;
 			case "addProduct":
 				$data['errors'] = self::addProduct();
-				if(empty($errors)){
+				if(empty($data['errors'])){
 					$data['result'] = 'Successful';
 				} else{
 					$data['result'] = 'Failed';

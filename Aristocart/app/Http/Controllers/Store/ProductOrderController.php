@@ -4,13 +4,16 @@ use App\Http\Controllers\Controller;		//Have to redefine where Controller is
 use App\Models\Authenticate;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ShoppingCart;
 use App\HTTP\Requests\LoginFormRequest;
 use Response;
-use Session;
 use Request;
+use Session;
+use Redirect;
 use View;
 
-class ProductBrowsingController extends Controller {
+class ProductOrderController extends Controller {
+	public $shoppingCart;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -33,66 +36,47 @@ class ProductBrowsingController extends Controller {
 			return redirect('access-denied');
 		}
 		$data = self::loadPreliminaryValues();
-		return view('store/product-browsing')->with('data', $data);
+		return view('store/product-order')->with('data', $data);
 	}
-
-
 	public function selectAction(){
 		$data = self::loadPreliminaryValues();
-
 		switch (Request::input('action')){
-			case "search":
-				$data['products'] = self::search();
-				return view('store/product-browsing')->with('data', $data);
-				break;
 			case "add-to-cart":
-				$data['productId'] = Request::input('productId');
 				$data['price'] = Request::input('price');
+				$data = array_merge($data, self::addProductToCart());
 				return view('store/product-order')->with('data', $data);
 				break;
+			case "confirm-add":
+				$this->shoppingCart->addProductToCart(Request::input('productId'), Request::input('quantity'), Request::input('price'));
+				return redirect('store/product-browsing');
+				break;
 		}
-		return redirect('store/product-browsing')->with('data', $data);
+		return view('store/product-order')->with('data', $data);
 	}
-
 	public function addProductToCart(){
-		return view('store/product-order');
-	}
-
-
-	private function loadPreliminaryValues(){
-		$role = Authenticate::checkRole();
-		$products = array();
-		$categories = Category::getCategories();
-
-		self::getCategoryId();
-		if($this->selectedCategory == -1){
-			$data['all_categories'] = 1;
-			$data['selected_category'] = 0;
-		} else{
-			$data['all_categories'] = 0;
-			$data['selected_category'] = $this->selectedCategory;
-		}
-		$products = Product::getProductsByCategoryId($this->selectedCategory);
-
-		$data['categories'] = $categories;
-		$data['role'] = $role;
-		$data['products'] = $products;
+		$newProduct = Product::getProductById(Request::input('productId'));
+		$data['new_item']['name'] = $newProduct[0]->name;
+		$data['new_item']['price'] = $newProduct[0]->price;
+		$data['new_item']['productId'] =  $newProduct[0]->id;
 		return $data;
 	}
 
-	private function getCategoryId(){
-		$this->selectedCategory = Request::input('selected_category');
-		if(!$this->selectedCategory){
-			$this->selectedCategory = -1;
+	private function loadPreliminaryValues(){
+		$role = Authenticate::checkRole();
+		if(Session::get('user_id') < 0){
+			redirect('login');
 		}
-	}
-
-	public function search(){
-		$productToSearch = new Product();
-		$productToSearch->itemName = Request::input('search');
-		$productToSearch->categoryId = $this->selectedCategory;
-		$products = $productToSearch->searchForProduct();
-		return $products;
+		$this->shoppingCart = new ShoppingCart();
+		$this->shoppingCart->userId = Session::get('user_id');
+		$this->shoppingCart->checkHasCart();
+		$this->shoppingCart->getActiveCart();
+		$products = $this->shoppingCart->doesCartHaveItems();
+		$data['products'] = $products;
+		$data['cart_total'] = $this->shoppingCart->cartTotal;
+		$data['new_item']['price'] = '';
+		$data['new_item']['name'] = '';
+		$data['new_item']['productId'] = '';
+		return $data;
 	}
 
 }

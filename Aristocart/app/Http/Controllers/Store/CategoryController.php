@@ -7,12 +7,12 @@ use App\Models\Authenticate;
 use Illuminate\Http\RedirectResponse;
 use App\HTTP\Requests\LoginFormRequest;
 use Response;
+use Session;
 use View;
 use URL;
 use Auth;
 use Redirect;
 use DB;
-use Session;
 
 class CategoryController extends Controller {
 
@@ -52,13 +52,26 @@ class CategoryController extends Controller {
 
 	public function setPreliminaryValues()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		Authenticate::checkExpiredLogin();
 		$role = Authenticate::checkRole();
 		$categories = array();
+		$products = array();
+		$cats = array();
 
 		$categories = Category::showCategories();
 		$products = Category::allCatsWithProducts();
+		foreach($categories as $cat){
+			foreach($products as $prod){
+				if($prod->category_id == $cat->id){
+					$cats[$cat->id] = $cat->name;
+				}	
+			}
+		}
 		$data = Session::get('data');
+		$data['hasProducts'] = $cats;
 		$data['categories'] = $categories;
 		$data['role'] = $role;
 		$data['catsWithProducts'] = $products;

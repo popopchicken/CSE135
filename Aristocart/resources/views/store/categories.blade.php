@@ -12,24 +12,22 @@
 		@endif
 		<div class="container">
 			@foreach($data['categories'] as $key => $category)
-			<div class="row">
+			<div class="row" style="border-bottom: solid">
 				<div class="col-md-3" id="categories">
 					<h3>{{ $category->name }}</h3><small>{{ $category->description }}</small>
 				</div>
 				<div class="col-md-3">
+					@if(in_array($category->name, $data['hasProducts']))
+						<p>Contains Products</p>
+					@else
 					<form method="POST" role="form" action="{{ url('store/categories') }}">
 						<input type="hidden" name="action" value="deleteCategory">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="cat_id" value="{{($category->id) }}">
 						<input type="hidden" name="cat_name" value="{{($category->name)}}">
-						@foreach($data['catsWithProducts'] as $key => $allCats)
-							@if($category->id == $allCats->category_id)
-								<p>Contains Products</p>
-							@else
-								<input type="submit" value="Delete">
-							@endif
-						@endforeach
+						<input type="submit" value="Delete">
 					</form>
+					@endif
 					<form method="POST" role="form" action="{{ url('store/categories') }}">
 						<input type="hidden" name="action" value="updateCategory">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
