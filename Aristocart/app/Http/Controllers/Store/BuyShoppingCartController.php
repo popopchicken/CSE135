@@ -12,7 +12,7 @@ use Session;
 use Redirect;
 use View;
 
-class ProductOrderController extends Controller {
+class BuyShoppingCartController extends Controller {
 	public $shoppingCart;
 
 	/*
@@ -33,29 +33,25 @@ class ProductOrderController extends Controller {
 	public function index()
 	{
 		$data = self::loadPreliminaryValues();
-		return view('store/product-order')->with('data', $data);
+		return view('store/buy-shopping-cart')->with('data', $data);
 	}
-	public function selectAction(){
+
+	public function buyCart(){
 		$data = self::loadPreliminaryValues();
-		switch (Request::input('action')){
-			case "add-to-cart":
-				$data['price'] = Request::input('price');
-				$data = array_merge($data, self::addProductToCart());
-				return view('store/product-order')->with('data', $data);
-				break;
-			case "confirm-add":
-				$this->shoppingCart->addProductToCart(Request::input('productId'), Request::input('quantity'), Request::input('price'));
-				return redirect('store/product-browsing');
-				break;
+		if(Request::input('credit_card') > 0){
+			$this->shoppingCart->buyCart();
+			return view('store/confirmation-page')->with('data',$data);
 		}
-		return view('store/product-order')->with('data', $data);
+		else{
+			$errors = 'Please enter a valid credit card';
+			$data['errors'] = $errors;
+			return view('store/buy-shopping-cart')->with('data', $data);
+		}
 	}
-	public function addProductToCart(){
-		$newProduct = Product::getProductById(Request::input('productId'));
-		$data['new_item']['name'] = $newProduct[0]->name;
-		$data['new_item']['price'] = $newProduct[0]->price;
-		$data['new_item']['productId'] =  $newProduct[0]->id;
-		return $data;
+
+	public function confirmPage(){
+		$data = self::loadPreliminaryValues();
+		return redirect('store/confirmation-page')->with('data', $data);
 	}
 
 	private function loadPreliminaryValues(){
@@ -70,9 +66,6 @@ class ProductOrderController extends Controller {
 		$products = $this->shoppingCart->doesCartHaveItems();
 		$data['products'] = $products;
 		$data['cart_total'] = $this->shoppingCart->cartTotal;
-		$data['new_item']['price'] = '';
-		$data['new_item']['name'] = '';
-		$data['new_item']['productId'] = '';
 		return $data;
 	}
 

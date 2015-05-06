@@ -43,8 +43,9 @@ class ProductBrowsingController extends Controller {
 				break;
 			case "add-to-cart":
 				$data['productId'] = Request::input('productId');
+				$data['price'] = Request::input('price');
 				return view('store/product-order')->with('data', $data);
-
+				break;
 		}
 		return redirect('store/product-browsing')->with('data', $data);
 	}

@@ -49,7 +49,7 @@ class Product {
 		return $errors;
 	}
 
-	public function getProductById($id){
+	public static function getProductById($id){
 		$product = DB::select('SELECT * FROM products WHERE id = ?', [$id]);
 		return $product;
 	}
