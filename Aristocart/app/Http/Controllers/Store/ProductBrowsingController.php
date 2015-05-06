@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\HTTP\Requests\LoginFormRequest;
 use Response;
+use Session;
 use Request;
 use View;
 use Session; 
@@ -29,6 +30,9 @@ class ProductBrowsingController extends Controller {
 	 */
 	public function index()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		$data = self::loadPreliminaryValues();
 		return view('store/product-browsing')->with('data', $data);
 	}
