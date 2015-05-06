@@ -28,6 +28,7 @@ $router->post('store/categories', 'Store\CategoryController@addCategory');	//Mus
 //$router->get('store/product_browsing', 'Store\ProductBrowsingController@index');
 $router->post('store/categories', 'Store\CategoryController@addCategories');	//Must use this for subfolders$router->delete('store/categories', 'Store\CategoryController@deleteCategories');
 $router->delete('store/categories', 'Store\CategoryController@deleteCategories');
+//Route::delete('store/categories/{$name}', array('uses' => 'CategoryController@deleteCategories', 'as' => 'store/categories'))
 
 $router->get('store/products', 'Store\ProductsController@index');
 $router->post('store/products', 'Store\ProductsController@addProduct');	

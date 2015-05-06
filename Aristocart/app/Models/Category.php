@@ -24,8 +24,8 @@ class Category {
 		return $categories;
 	}
 
-	public function deleteCategory(){
-		$delRow = DB::delete('delete from categories where name = ?', [$this->cat_name]);
+	public function deleteCategory($name){
+		$delRow = DB::delete('delete from categories where name = ?', [$name]);
 		return true;
 	}
 

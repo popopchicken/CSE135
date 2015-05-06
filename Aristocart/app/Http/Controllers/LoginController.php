@@ -43,16 +43,15 @@ class LoginController extends Controller {
 	
 	public function login()
 	{
-<<<<<<< HEAD
+
 		Authenticate::login(Request::input('user_name'));
 		return redirect('home');
-=======
+
 		$errors = Authenticate::login(Request::input('user_name'));
 		if(!empty($errors)){
 			return redirect('login')->with('errors', $errors);
 		}
 		return redirect('store/categories');
->>>>>>> a8d55e08d1cde88e3db534ebc223ff1e4c695755
 	}
 
 	public function logout(){

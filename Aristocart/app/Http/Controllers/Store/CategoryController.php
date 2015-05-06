@@ -71,9 +71,10 @@ class CategoryController extends Controller {
 		}
 	}
 
-	public function deleteCategories()
+	public function deleteCategories($name)
 	{
-		
+		$result = Category::deleteCategory($name);
+		return Redirect::back()->with('message', 'Successfully Deleted Category');
 	}
 
 }

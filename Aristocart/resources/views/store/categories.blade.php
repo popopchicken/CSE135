@@ -16,11 +16,15 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-3"><h3>{{ $category->name }}</h3><small>{{ $category->description }}</small></div>
+						<div class="col-md-3">
+							{!! Form::open(array('url' => array('store/categories', $category->name), 'method' => 'delete'))!!}
+								<button type="submit" class="btn btn-danger">Delete</button>
+							{!! Form::close() !!}
+						</div>
 					</div>
 				</div>
 			@endforeach
 		</form>
-
 		<div class="container">
 		<form method="POST" role="form" action="{{ url('store/categories')}}">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
