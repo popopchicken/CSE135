@@ -76,6 +76,8 @@ class ProductOrderController extends Controller {
 		$data['new_item']['price'] = '';
 		$data['new_item']['name'] = '';
 		$data['new_item']['productId'] = '';
+		$data['name'] = Session::get('user_name'); 
+		$data['role'] = $role; 
 		return $data;
 	}
 

@@ -71,6 +71,7 @@ class CategoryController extends Controller {
 			}
 		}
 		$data = Session::get('data');
+		$data['name'] = Session::get('user_name');
 		$data['hasProducts'] = $cats;
 		$data['categories'] = $categories;
 		$data['role'] = $role;

@@ -2,6 +2,7 @@
 
 use  Illuminate\Database\DatabaseManager;
 use DB;
+use Session;
 
 class User{
 	public $name;
@@ -46,6 +47,12 @@ class User{
 		else{
 			return false;
 		}
+	}
+
+	public static function getUserName(){
+		$id = Session::get('user_id');
+		$results = DB::select('SELECT name FROM users WHERE id = ?', [$id]);
+		return $results;
 	}
 
 	public function validateUserInput(){
