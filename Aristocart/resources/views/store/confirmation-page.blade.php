@@ -12,7 +12,7 @@
 				@foreach($data['products'] as $product)
 					<tr>
 						<td> {{$product->name}}</td>
-						<td> {{$product->price}}</td>
+						<td> ${{$product->price}}</td>
 						<td> {{$product->quantity}}</td>
 					</tr>
 				@endforeach
