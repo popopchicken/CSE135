@@ -15,4 +15,22 @@ class Category {
 		return true;
 	}
 
+	public function deleteCategory(){
+		$delRow = DB::delete('delete from categories where name = ?', [$this->cat_name]);
+		return true;
+	}
+
+	public static function showCategories(){
+		$results = DB::select('select * from categories');
+		return $results;
+	}
+
+	public function checkDuplicate(){
+		$results = DB::select('select name from categories where name = ?', [$this->cat_name]);
+		if($results == false){
+			return false;
+		}
+		return true;
+	}
+
 }
