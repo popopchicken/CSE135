@@ -30,7 +30,13 @@ $router->post('store/categories', 'Store\CategoryController@addCategories');	//M
 $router->delete('store/categories', 'Store\CategoryController@deleteCategories');
 
 $router->get('store/products', 'Store\ProductsController@index');
-$router->post('store/products', 'Store\ProductsController@selectAction');	
+$router->post('store/products', 'Store\ProductsController@selectAction');
+
+$router->get('store/product-browsing', 'Store\ProductBrowsingController@index');
+$router->post('store/product-browsing', 'Store\ProductBrowsingController@selectAction');
+
+$router->get('store/product-order', 'Store\ProductOrderController@index');
+$router->post('store/product-order', 'Store\ProductOrderController@addProductToCart');	
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
