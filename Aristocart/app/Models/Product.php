@@ -14,7 +14,7 @@ class Product {
 
 	public function addProduct(){
 
-		$errors = self::validateUserInput();
+		$errors = self::validateUserInput(false);
 
 		if(empty($errors)){
 			DB::insert('INSERT INTO products (name, sku, price, description) VALUEs(?, ?, ?, ?)', [$this->itemName, $this->skuNum, $this->price, $this->description]);
@@ -28,9 +28,9 @@ class Product {
 	}
 
 	public function updateProduct(){
-		$errors = self::validateUserInput();
+		$errors = self::validateUserInput(true);
 		if(empty($errors)){
-			DB::update('UPDATE products AS p 
+			$results = DB::update('UPDATE products AS p 
 				INNER JOIN category_products AS c ON p.id = c.product_id 
 				SET p.name = ?, 
 				p.sku = ?, 
@@ -42,7 +42,7 @@ class Product {
 					$this->skuNum, 
 					$this->price, 
 					$this->categoryId, 
-					$this->product_id
+					$this->productId
 				]
 			);
 		}
@@ -53,8 +53,12 @@ class Product {
 
 	}
 
-	public function getProductBySku(){
-		$results = DB::select('SELECT * FROM products WHERE sku = ?', [$this->skuNum]);
+	public function getProductBySku($update){
+		if($update){
+			$results = DB::select('SELECT * FROM products WHERE sku = ? AND id != ?', [$this->skuNum, $this->productId]);
+		} else{
+			$results = DB::select('SELECT * FROM products WHERE sku = ?', [$this->skuNum]);
+		}
 		if(!$results){
 			return false;
 		} else{
@@ -71,8 +75,6 @@ class Product {
 				WHERE c.category_id = ?', 
 				[$category]
 			);
-			var_dump($products);
-			exit;
 		} else{
 			$products = DB::select('SELECT *
 				FROM products AS p
@@ -95,17 +97,17 @@ class Product {
 		return $errors;
 	}
 
-	private function validateUserInput(){
+	private function validateUserInput($update){
 		$errors = array();
 		if($this->itemName == ''){
 			$errors['name'] = "Please enter a valid product name";
 		}
 		if($this->skuNum > 0){
-			$results = self::getProductBySku();
+			$results = self::getProductBySku($update);
 			if($results){
 				$errors['sku'] = "This SKU number is being used by another product";
 			}
-		} else{
+		} else {
 			$errors['sku'] = "Please enter a valid SKU number";
 		}
 
@@ -126,8 +128,6 @@ class Product {
 				ON p.id = c.product_id 
 				WHERE name LIKE '%?%'", [$this->itemName]
 			);
-			var_dump($products);
-			exit;
 		} else{
 			$products = DB::select("SELECT * FROM products AS p 
 				INNER JOIN category_products AS c 
@@ -137,7 +137,6 @@ class Product {
 				[$this->itemName, $this->categoryId]
 			);
 		}
-		
 		return $products;
 	}
 }

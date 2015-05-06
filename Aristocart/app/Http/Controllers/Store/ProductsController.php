@@ -45,7 +45,7 @@ class ProductsController extends Controller {
 				return View::make('store/add-product-results')->with('data', $data);
 				break;
 			case "update":
-				$data = self::updateProduct();
+				$data['errors'] = self::updateProduct();
 				break;
 			case "delete":
 				$data['errors'] = self::deleteProduct();
@@ -76,9 +76,7 @@ class ProductsController extends Controller {
 		$productToUpdate->categoryId = Request::input('category');
 		$productToUpdate->updateProduct();
 		$errors = $productToUpdate->updateProduct();
-		if(empty($errors)){
-			return view('store/products')->with('data', $data);
-		}
+		return $errors;
 	}
 
 	public function search(){
