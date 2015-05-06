@@ -1,6 +1,6 @@
 <?php namespace App\Models;
 
-use  Illuminate\Database\DatabaseManager;
+use Illuminate\Database\DatabaseManager;
 use DB;
 use Session;
 
@@ -15,4 +15,12 @@ class Category {
 		return true;
 	}
 
+	public static function getCategories(){
+		$categories = array();
+		$results = DB::select('SELECT * FROM categories');
+		foreach($results as $result){
+			$categories[$result->id] = $result->name;
+		}
+		return $categories;
+	}
 }

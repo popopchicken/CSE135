@@ -23,13 +23,13 @@ Route::get('logout', 'LoginController@logout');
 //Route::post('store/product-browsing', ProductBrowsingController)
 
 $router->get('store/categories', 'Store\CategoryController@index');	//Must use this for subfolders (Look at CategoryController for more config)
-<<<<<<< HEAD
+
 $router->post('store/categories', 'Store\CategoryController@addCategory');	//Must use this for subfolders
 //$router->get('store/product_browsing', 'Store\ProductBrowsingController@index');
-=======
 $router->post('store/categories', 'Store\CategoryController@addCategories');	//Must use this for subfolders
 
->>>>>>> a8d55e08d1cde88e3db534ebc223ff1e4c695755
+$router->get('store/products', 'Store\ProductsController@index');
+$router->post('store/products', 'Store\ProductsController@addProduct');	
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
