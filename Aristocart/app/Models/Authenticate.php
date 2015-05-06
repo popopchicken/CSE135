@@ -4,6 +4,7 @@ use  Illuminate\Database\DatabaseManager;
 use DB;
 use Session;
 
+
 class Authenticate{
 
 	//Logs the user in and sets their 'last logged in' field to the current date
@@ -11,11 +12,17 @@ class Authenticate{
 		$errors = array();
 		if(Session::get('user_id')>0){
 			return $errors;
-		} else{
+		} else {
 			$user = new User();
 			$user->name = $name;
+			//Blank Text box
+			if(empty($user->name)) {
+				$errors['name'] = 'Please enter in your login credentials'; 
+				return $errors; 
+			}
+			//Invalid Login
 			if(!($user->doesUserExist())){
-				$errors['name'] = 'Your user name does not exist';
+				$errors['name'] = 'The provided user name ' . $user->name . ' does not exist. Please try again.';
 				return $errors;
 			}
 			$results = DB::select('SELECT users.id, roles.role_type from users INNER JOIN roles ON users.id = roles.user_id WHERE users.name = ?', [$name]);

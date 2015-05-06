@@ -33,7 +33,7 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
-		if(!Authenticate::checkRole()){
+		if( !Authenticate::checkRole() ){
 			return view('login');
 		}
 		else{
@@ -43,13 +43,13 @@ class LoginController extends Controller {
 	
 	public function login()
 	{
-		Authenticate::login(Request::input('user_name'));
-		return redirect('home');
+		//Authenticate::login(Request::input('user_name'));
+		//return redirect('home');
 		$errors = Authenticate::login(Request::input('user_name'));
-		if(!empty($errors)){
+		if( !empty($errors) ){
 			return redirect('login')->with('errors', $errors);
-		}
-		return redirect('store/categories');
+		} 
+		return redirect('home');
 	}
 
 	public function logout(){

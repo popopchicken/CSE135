@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 use App\Models\Authenticate;
+use Session;
 
 class HomeController extends Controller {
 
@@ -31,6 +32,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
+		$data['name'] = Session::get('name'); 
 		$data['role'] = Authenticate::checkRole();
 		return view('/home')->with('data', $data);
 	}
