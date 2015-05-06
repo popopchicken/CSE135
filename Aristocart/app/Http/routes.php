@@ -36,7 +36,13 @@ $router->get('store/product-browsing', 'Store\ProductBrowsingController@index');
 $router->post('store/product-browsing', 'Store\ProductBrowsingController@selectAction');
 
 $router->get('store/product-order', 'Store\ProductOrderController@index');
-$router->post('store/product-order', 'Store\ProductOrderController@selectAction');	
+$router->post('store/product-order', 'Store\ProductOrderController@selectAction');
+
+$router->get('store/buy-shopping-cart', 'Store\BuyShoppingCartController@index');
+$router->post('store/buy-shopping-cart', 'Store\BuyShoppingCartController@buyCart');
+
+$router->get('store/confirmation-page', 'Store\BuyShoppingCartController@confirmPage');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

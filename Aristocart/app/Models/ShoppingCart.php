@@ -59,4 +59,9 @@ class ShoppingCart {
 		$results = DB::select('SELECT total_price FROM carts WHERE id = ?',[$this->cartId]);
 		$this->cartTotal = $results[0]->total_price;
 	}
+
+	public function buyCart(){
+		DB::update('UPDATE user_carts SET active = ? WHERE user_id = ?', [false, $this->userId]);
+		self::createCart();
+	}
 }
