@@ -13,5 +13,7 @@
 		</ul> -->
 		<h2> Failure to insert new product. </h2>
 		@endif
+		<br />
+		<a href='products'>Back to Products</a>
 	</body>
 </html>

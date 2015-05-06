@@ -71,6 +71,8 @@ class Product {
 				WHERE c.category_id = ?', 
 				[$category]
 			);
+			var_dump($products);
+			exit;
 		} else{
 			$products = DB::select('SELECT *
 				FROM products AS p
@@ -115,5 +117,27 @@ class Product {
 			$errors['category'] = "Please select a valid category";
 		}
 		return $errors;
+	}
+
+	public function searchForProduct(){
+		if($this->categoryId < 0){
+			$products = DB::select("SELECT * FROM products AS p 
+				INNER JOIN category_products AS c 
+				ON p.id = c.product_id 
+				WHERE name LIKE '%?%'", [$this->itemName]
+			);
+			var_dump($products);
+			exit;
+		} else{
+			$products = DB::select("SELECT * FROM products AS p 
+				INNER JOIN category_products AS c 
+				ON p.id = c.product_id 
+				WHERE name LIKE '%?%' 
+				AND c.category_id = ?", 
+				[$this->itemName, $this->categoryId]
+			);
+		}
+		
+		return $products;
 	}
 }

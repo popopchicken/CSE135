@@ -6,10 +6,12 @@
 		@if($data['role'] == 'owner')
 		<h1>Products</h1>
 		<br />
-			<form method="POST" role="form" action="{{ url('store/products') }}">
+			<form method="POST" role="form" name="search_form" action="{{ url('store/products') }}">
 				<label for="search">Search</label>
 				<input type="text" name="search">
 				<input type="hidden" name="action" value="search">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<input type="submit" value="Search">
 			</form>
 		<br />
 		<div id="categories" style="float:left">
@@ -51,7 +53,7 @@
 								<form method="POST" role="form" action="{{ url('store/products') }}">
 									<input type="hidden" name="action" value="update">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<input type="hidden" name="productId" value="{{$product->id}}">
+									<input type="hidden" name="productId" value="{{$product->product_id}}">
 									<label for="name">Item Name</label>
 									<input type="text" name="name" value="{{$product->name}}">
 									<br />
@@ -71,10 +73,10 @@
 									<br />
 									<input type="submit" value="Update">
 								</form>
-								<form method="POST" role="form" action="{{url('store/products') }}">
+								<form method="POST" role="form" name="delete_form{{$product->id}}" action="{{url('store/products') }}">
 									<input type="hidden" name="action" value="delete">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<input type="hidden" name="productId" value="{{$product->id}}">
+									<input type="hidden" name="productId" value="{{$product->product_id}}">
 									<input type="submit" value="Delete">
 								</form>
 							</td>

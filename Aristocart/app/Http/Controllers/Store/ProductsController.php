@@ -33,7 +33,7 @@ class ProductsController extends Controller {
 
 		switch (Request::input('action')){
 			case "search":
-				$data = self::search();
+				$data['errors'] = self::search();
 				break;
 			case "addProduct":
 				$data['errors'] = self::addProduct();
@@ -82,7 +82,11 @@ class ProductsController extends Controller {
 	}
 
 	public function search(){
-
+		$productToSearch = new Product();
+		$productToSearch->itemName = Request::input('search');
+		$productToSearch->categoryId = $this->selectedCategory;
+		$products = $productToSearch->searchForProduct();
+		
 	}
 
 	public function deleteProduct(){
