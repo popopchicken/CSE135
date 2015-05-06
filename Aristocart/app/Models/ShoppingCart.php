@@ -36,7 +36,7 @@ class ShoppingCart {
 			if($this->cartTotal == 0){
 				$this->cartTotal = $quantity * $price;
 			} else{
-				$this->cartTotal += $quantity * $price;
+				$this->cartTotal = self::getCartTotal();
 			}
 			DB::update('UPDATE carts SET total_price = ? WHERE id = ?', [$this->cartTotal, $this->cartId]);
 		}
@@ -57,7 +57,8 @@ class ShoppingCart {
 
 	public function getCartTotal(){
 		$results = DB::select('SELECT total_price FROM carts WHERE id = ?',[$this->cartId]);
-		$this->cartTotal = $results[0]->total_price;
+		$sum = DB::select('SELECT SUM(c.quantity * p.price) AS sum FROM carts_products AS c RIGHT JOIN products AS p ON c.product_id = p.id WHERE c.cart_id = ?', [$this->cartId]);
+		$this->cartTotal = $sum[0]->sum;
 	}
 
 	public function buyCart(){
