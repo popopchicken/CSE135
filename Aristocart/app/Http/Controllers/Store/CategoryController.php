@@ -12,6 +12,7 @@ use URL;
 use Auth;
 use Redirect;
 use DB;
+use Session;
 
 class CategoryController extends Controller {
 
@@ -42,9 +43,60 @@ class CategoryController extends Controller {
 	 */
 	public function index()
 	{
+		$data = self::setPreliminaryValues();
+
+		/*Authenticate::checkExpiredLogin();
+		$categories = Category::showCategories();*/
+		return View::make('store/categories')->with('data', $data);
+	}
+
+	public function setPreliminaryValues()
+	{
 		Authenticate::checkExpiredLogin();
+		$role = Authenticate::checkRole();
+		$categories = array();
+
 		$categories = Category::showCategories();
-		return View::make('store/categories')->with('categories', $categories);
+		$products = Category::allCatsWithProducts();
+		$data = Session::get('data');
+		$data['categories'] = $categories;
+		$data['role'] = $role;
+		$data['catsWithProducts'] = $products;
+
+		return $data;
+	}
+
+	public function selectAction()
+	{
+		$data = self::setPreliminaryValues();
+
+		switch (Request::input('action')){
+			case "addCategory":
+				$data['errors'] = self::addCategories();
+				if(empty($data['errors'])){
+					$data['result'] = "Addition Successful";
+				}
+				else {
+					$data['result'] = "Failure to Add Category";
+				}
+
+				//return View::make('store/categories')->with('data', $data);
+				return Redirect::to('store/categories')->with('data', $data);
+				break;
+			case "deleteCategory":
+				$data['errors'] = self::deleteCategories();
+				//$data['hasProducts'] = Category::hasProducts();
+				return Redirect::to('store/categories')->with('data', $data);
+				break;
+			case "updateCategory":
+				$data['errors'] = self::updateCategories();
+				return Redirect::to('store/categories')->with('data', $data);
+				//Redirect::back()->with('data', $data);
+				break;
+		}
+
+		//$data = Session::get('data');
+		return View::make('store/categories')->with('data', $data);
 	}
 
 	public function addCategories()
@@ -52,29 +104,32 @@ class CategoryController extends Controller {
 		$name = Request::input('cat_name');
 		$description = Request::input('cat_description');
 
-		$category = new Category();
-		$category->cat_name = $name;
-		$category->cat_description = $description;
+		$categoryToAdd = new Category();
+		$categoryToAdd->cat_name = $name;
+		$categoryToAdd->cat_description = $description;
 
-		$duplicate = $category->checkDuplicate();
-		if($duplicate){
-			$message = "Category already exists";
-			return Redirect::back()->with('message', $message);
-		}
-		if(is_null($name) || is_null($description)){
-			return Redirect::back()->with('message','Addition Unsuccessful! Please enter a category name and/or description.');
-		}
-		else{
-			$category->addCategory();
-			return Redirect::back()->with('message','Addition Successful !');
-			//return View::make('store/categories');
-		}
+		$message = $categoryToAdd->addCategory();
+		return $message;
+
 	}
 
-	public function deleteCategories($name)
+	public function deleteCategories()
 	{
-		$result = Category::deleteCategory($name);
-		return Redirect::back()->with('message', 'Successfully Deleted Category');
+		$categoryToDelete = new Category();
+		$categoryToDelete->cat_name = Request::input('cat_name');
+		$categoryToDelete->cat_id = Request::input('cat_id');
+		$message = $categoryToDelete->deleteCategory();
+		return $message;
+	}
+
+	public function updateCategories()
+	{
+		$categoryToUpdate = new Category();
+		$categoryToUpdate->cat_name = Request::input('cat_name');
+		$categoryToUpdate->cat_description = Request::input('cat_description');
+		$categoryToUpdate->cat_id = Request::input('cat_id');
+		$message = $categoryToUpdate->updateCategory();
+		return $message;
 	}
 
 }

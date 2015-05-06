@@ -8,7 +8,7 @@
 		Home <br />
 		<a href="{{ url('/store/categories') }}"> Categories </a> <br/>
 		<a href="{{ url('/store/products') }}"> Products </a> <br />
-		<a href="{{ url('/store/product-browsing}}"> Products Browsing </a> <br />
+		<a href="{{ url('/store/product-browsing')}}"> Products Browsing </a> <br />
 		<a href="#"> Product Order </a> <br />
 		<a href="#"> Buy Shopping Cart </a> <br />
 		<a href="#"> Confirmation </a> <br />
