@@ -17,7 +17,7 @@ class ShoppingCart {
 	}
 
 	public function checkHasCart(){
-		$results = DB::select('SELECT * FROM user_carts WHERE user_id = ?', [$this->userId]);
+		$results = DB::select('SELECT * FROM user_carts WHERE user_id = ? AND active = ?', [$this->userId, 'true']);
 		if(!$results){
 			self::createCart();
 		}
@@ -38,7 +38,7 @@ class ShoppingCart {
 			} else{
 				$this->cartTotal += $quantity * $price;
 			}
-			DB::update('UPDATE carts SET total_price = ?', [$this->cartTotal]);
+			DB::update('UPDATE carts SET total_price = ? WHERE id = ?', [$this->cartTotal, $this->cartId]);
 		}
 		
 	}
@@ -61,7 +61,7 @@ class ShoppingCart {
 	}
 
 	public function buyCart(){
-		DB::update('UPDATE user_carts SET active = ? WHERE user_id = ?', [false, $this->userId]);
+		DB::update('UPDATE user_carts SET active = ? WHERE user_id = ?', ['false', $this->userId]);
 		self::createCart();
 	}
 }

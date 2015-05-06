@@ -38,9 +38,9 @@ class BuyShoppingCartController extends Controller {
 
 	public function buyCart(){
 		$data = self::loadPreliminaryValues();
-		if(!Request::input('credit_card') > 0){
+		if(Request::input('credit_card') > 0){
 			$this->shoppingCart->buyCart();
-			return redirect('store/confirmation-page');
+			return view('store/confirmation-page')->with('data',$data);
 		}
 		else{
 			$errors = 'Please enter a valid credit card';
@@ -50,7 +50,8 @@ class BuyShoppingCartController extends Controller {
 	}
 
 	public function confirmPage(){
-		return view('store/confirmation-page');
+		$data = self::loadPreliminaryValues();
+		return redirect('store/confirmation-page')->with('data', $data);
 	}
 
 	private function loadPreliminaryValues(){
