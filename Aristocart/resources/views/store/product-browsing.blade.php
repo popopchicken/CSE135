@@ -38,7 +38,8 @@
 								<form method="POST" role="form" action="{{ url('store/product-order') }}">
 									<input type="hidden" name="action" value="add-to-cart">
 									<input type="hidden" name="productId" value="{{$product->product_id}}">
-									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<input type="hidden" name="price" value="{{$product->price}}">
+ 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
 									<input type="submit" value="Add To Cart">
 								</form>
 							</td>

@@ -10,9 +10,9 @@
 			<table>
 				@foreach($data['products'] as $product)
 					<tr>
-						<td> $product->name</td>
-						<td> $product->price</td>
-						<td> $product->quantity</td>
+						<td> {{$product->name}}</td>
+						<td> {{$product->price}}</td>
+						<td> {{$product->quantity}}</td>
 					</tr>
 				@endforeach
 				<tr>
@@ -32,9 +32,10 @@
 						<form method="POST" role="form" name="confirm_add" action="{{ url('store/product-order') }}">
 						<label for="quantity">Add Quantity:</label>
 						<input type="text" name="quantity">
-						<input type="hidden" name="action" value="confirm_add">
+						<input type="hidden" name="action" value="confirm-add">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input type="hidden" name="productId" value="{{$data['new_item']['productId']}}">
+						<input type="hidden" name = "price" value="{{$data['price']}}">
 						<input type="submit" value="Add to Cart">
 						</form>
 					</td>

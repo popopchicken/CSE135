@@ -36,7 +36,7 @@ $router->get('store/product-browsing', 'Store\ProductBrowsingController@index');
 $router->post('store/product-browsing', 'Store\ProductBrowsingController@selectAction');
 
 $router->get('store/product-order', 'Store\ProductOrderController@index');
-$router->post('store/product-order', 'Store\ProductOrderController@addProductToCart');	
+$router->post('store/product-order', 'Store\ProductOrderController@selectAction');	
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

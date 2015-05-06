@@ -28,15 +28,23 @@ class ShoppingCart {
 		DB::insert('INSERT INTO user_carts (user_id, cart_id) VALUES(?,?)', [$this->userId, $this->cartId]);
 	}
 
-	public function addProductToCart(){
-		DB::insert('INSERT INTO carts_products (cart_id, product_id, quantity) VALUES(?,?,?)', [$this->cartId, $productId, $quantity]);
-		$results = DB::select('SELECT total_price FROM carts WHERE id = ?', [$this->cartId]);
-		$total = $quantity * $item_price;
-		DB::update('UPDATE carts SET total_price = ?', [$total]);
+	public function addProductToCart($productId, $quantity, $price){
+		if($quantity > 0){
+			DB::insert('INSERT INTO carts_products (cart_id, product_id, quantity) VALUES(?,?,?)', [$this->cartId, $productId, $quantity]);
+			$results = DB::select('SELECT total_price FROM carts WHERE id = ?', [$this->cartId]);
+			$this->cartTotal = $results[0]->total_price;
+			if($this->cartTotal == 0){
+				$this->cartTotal = $quantity * $price;
+			} else{
+				$this->cartTotal += $quantity * $price;
+			}
+			DB::update('UPDATE carts SET total_price = ?', [$this->cartTotal]);
+		}
+		
 	}
 
 	public function doesCartHaveItems(){
-		$results = DB::select('SELECT * FROM carts_products WHERE cart_id = ?', [$this->cartId]);
+		$results = DB::select('SELECT * FROM carts_products AS c LEFT JOIN products AS p on c.product_id = p.id WHERE cart_id = ?', [$this->cartId]);
 		if(!$results){
 			$products = array();
 			return $products;
@@ -48,8 +56,7 @@ class ShoppingCart {
 	}
 
 	public function getCartTotal(){
-		foreach($products as $product){
-			var_dump($product);
-		}
+		$results = DB::select('SELECT total_price FROM carts WHERE id = ?',[$this->cartId]);
+		$this->cartTotal = $results[0]->total_price;
 	}
 }
