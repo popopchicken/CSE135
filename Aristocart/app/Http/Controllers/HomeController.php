@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+use App\Models\Authenticate;
 
 class HomeController extends Controller {
 
@@ -24,13 +25,14 @@ class HomeController extends Controller {
 	}
 
 	/**
-	 * Show the application dashboard to the user.
+	 * Show the application dashboard depending whether guest or owner. 
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return view('home');
+		$data['role'] = Authenticate::checkRole();
+		return view('/home')->with('data', $data);
 	}
 
 }
