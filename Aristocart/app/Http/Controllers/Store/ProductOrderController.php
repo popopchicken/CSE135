@@ -32,6 +32,9 @@ class ProductOrderController extends Controller {
 	 */
 	public function index()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		$data = self::loadPreliminaryValues();
 		return view('store/product-order')->with('data', $data);
 	}

@@ -32,6 +32,9 @@ class BuyShoppingCartController extends Controller {
 	 */
 	public function index()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		$data = self::loadPreliminaryValues();
 		return view('store/buy-shopping-cart')->with('data', $data);
 	}
@@ -50,6 +53,9 @@ class BuyShoppingCartController extends Controller {
 	}
 
 	public function confirmPage(){
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		$data = self::loadPreliminaryValues();
 		return redirect('store/confirmation-page')->with('data', $data);
 	}

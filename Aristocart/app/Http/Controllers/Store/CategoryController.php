@@ -7,6 +7,7 @@ use App\Models\Authenticate;
 use Illuminate\Http\RedirectResponse;
 use App\HTTP\Requests\LoginFormRequest;
 use Response;
+use Session;
 use View;
 use URL;
 use Auth;
@@ -42,6 +43,9 @@ class CategoryController extends Controller {
 	 */
 	public function index()
 	{
+		if(!Session::get('user_id')){
+			return redirect('access-denied');
+		}
 		Authenticate::checkExpiredLogin();
 		$categories = Category::showCategories();
 		return View::make('store/categories')->with('categories', $categories);
