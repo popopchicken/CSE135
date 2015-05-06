@@ -18,7 +18,7 @@ class Product {
 
 		if(empty($errors)){
 			DB::insert('INSERT INTO products (name, sku, price, description) VALUEs(?, ?, ?, ?)', [$this->itemName, $this->skuNum, $this->price, $this->description]);
-			$product = self::getProductBySku();
+			$product = self::getProductBySku(false);
 			$this->productId = $product->id;
 			DB::insert('INSERT INTO category_products (category_id, product_id) VALUES(?,?)', [$this->categoryId, $this->productId]);
 			return $errors;
@@ -123,20 +123,21 @@ class Product {
 
 	public function searchForProduct(){
 		if($this->categoryId < 0){
-			$products = DB::select("SELECT * FROM products AS p 
-				INNER JOIN category_products AS c 
-				ON p.id = c.product_id 
-				WHERE name LIKE '%?%'", [$this->itemName]
+			$products = DB::select('SELECT * FROM products AS p 
+				INNER JOIN category_products AS c ON p.id = c.product_id
+				WHERE p.name LIKE ?', 
+				['%'.$this->itemName.'%']
 			);
 		} else{
-			$products = DB::select("SELECT * FROM products AS p 
+			$products = DB::select('SELECT * FROM products AS p 
 				INNER JOIN category_products AS c 
 				ON p.id = c.product_id 
-				WHERE name LIKE '%?%' 
-				AND c.category_id = ?", 
-				[$this->itemName, $this->categoryId]
+				WHERE p.name LIKE ? 
+				AND c.category_id = ?', 
+				['%'.$this->itemName.'%', $this->categoryId]
 			);
 		}
 		return $products;
+
 	}
 }

@@ -33,7 +33,8 @@ class ProductsController extends Controller {
 
 		switch (Request::input('action')){
 			case "search":
-				$data['errors'] = self::search();
+				$data['products'] = self::search();
+				return view('store/products')->with('data', $data);
 				break;
 			case "addProduct":
 				$data['errors'] = self::addProduct();
@@ -42,6 +43,7 @@ class ProductsController extends Controller {
 				} else{
 					$data['result'] = 'Failed';
 				}
+
 				return View::make('store/add-product-results')->with('data', $data);
 				break;
 			case "update":
@@ -84,7 +86,7 @@ class ProductsController extends Controller {
 		$productToSearch->itemName = Request::input('search');
 		$productToSearch->categoryId = $this->selectedCategory;
 		$products = $productToSearch->searchForProduct();
-		
+		return $products;
 	}
 
 	public function deleteProduct(){
@@ -107,7 +109,13 @@ class ProductsController extends Controller {
 		$categories = Category::getCategories();
 
 		self::getCategoryId();
-		$data['selected_category'] = $this->selectedCategory;
+		if($this->selectedCategory == -1){
+			$data['all_categories'] = 1;
+			$data['selected_category'] = 0;
+		} else{
+			$data['all_categories'] = 0;
+			$data['selected_category'] = $this->selectedCategory;
+		}
 		$products = Product::getProductsByCategoryId($this->selectedCategory);
 
 		$data['categories'] = $categories;

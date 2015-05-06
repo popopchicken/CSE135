@@ -11,14 +11,16 @@
 				<input type="text" name="search">
 				<input type="hidden" name="action" value="search">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<input type="hidden" name="selected_category" value="{{$data['selected_category']}}">
+				<input type="hidden" name="all_categories" value="{{$data['all_categories']}}">
 				<input type="submit" value="Search">
 			</form>
 		<br />
 		<div id="categories" style="float:left">
 			<ul>
-					<li><a href="products?all_categories=1">All Categories</a>{{ ($data['selected_category'] == -1 ? '***' : '') }}</li>
+					<li><a href="products?all_categories=1">All Categories</a>{{ ($data['all_categories'] == 1 ? '***' : '') }}</li>
 				@foreach($data['categories'] as $key => $category)
-					<li><a href="products?selected_category={{ $key }}">{{ $category }}</a> <?=($data['selected_category'] == $key ? ' ***' : '')?></li>
+					<li><a href="products?all_categories=0&amp;selected_category={{ $key }}">{{ $category }}</a> <?=($data['selected_category'] == $key ? ' ***' : '')?></li>
 				@endforeach
 			</ul>	
 		</div>
@@ -53,7 +55,7 @@
 								<form method="POST" role="form" action="{{ url('store/products') }}">
 									<input type="hidden" name="action" value="update">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<input type="hidden" name="productId" value="{{$product->product_id}}">
+									<input type="hidden" name="productId" value="{{($product->product_id) }}">
 									<label for="name">Item Name</label>
 									<input type="text" name="name" value="{{$product->name}}">
 									<br />
@@ -67,25 +69,19 @@
 									<select name="category">
 										<option value="-1">---Select One---</option>
 									@foreach($data['categories'] as $key => $category)
-										<option value="{{ $key }}" selected="{{($key == $product->category_id ? 'selected' : '')}}">{{ $category }}</option>
+										<option value="{{ $key }}" {{($key == $product->category_id ? 'selected' : '')}}>{{ $category }}</option>
 									@endforeach
 									</select>
 									<br />
 									<input type="submit" value="Update">
 								</form>
-								<form method="POST" role="form" name="delete_form{{$product->id}}" action="{{url('store/products') }}">
+								<form method="POST" role="form" action="{{url('store/products') }}">
 									<input type="hidden" name="action" value="delete">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<input type="hidden" name="productId" value="{{$product->product_id}}">
+									<input type="hidden" name="productId" value="{{($product->product_id)}}">
 									<input type="submit" value="Delete">
 								</form>
 							</td>
-							@if($data['count'] == 4)
-								</tr>
-								<tr>
-								<? $data['count'] = 0; ?>
-							@endif
-							<? $data['count']++; ?>
 						@endforeach
 					</tr>
 				</table>
