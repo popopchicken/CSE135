@@ -18,5 +18,9 @@
 			<br />
 			<input type="submit" value="Login">
 		</form>
+		<!-- SignUp Page -->
+		<form method="GET" role="form" action="{{ url('sign-up')}}">
+				<input type="submit" value="Register Here">
+		</form> 
 	</body>
 </html>
