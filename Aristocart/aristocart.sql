@@ -1,243 +1,73 @@
--- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: May 01, 2015 at 03:18 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `aristocart`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carts`
---
-
-CREATE TABLE IF NOT EXISTS `carts` (
-`id` int(11) NOT NULL,
-  `total_price` decimal(10,2) NOT NULL DEFAULT '0.00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `carts_products`
---
-
-CREATE TABLE IF NOT EXISTS `carts_products` (
-`id` int(11) NOT NULL,
-  `cart_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
-
-CREATE TABLE IF NOT EXISTS `categories` (
-`id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `description` text NOT NULL,
-  `created_by_user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category_products`
---
-
-CREATE TABLE IF NOT EXISTS `category_products` (
-  `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE IF NOT EXISTS `products` (
-`id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `sku` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `description` text,
-  `category_id` int(11) NOT NULL,
-  `created_by_user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `roles`
---
-
-CREATE TABLE IF NOT EXISTS `roles` (
-`id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `role_type` enum('owner','customer') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `states`
---
-
-CREATE TABLE IF NOT EXISTS `states` (
-`id` int(11) NOT NULL,
-  `state` varchar(20) NOT NULL,
-  `abbreviation` varchar(2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-`id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `age` int(11) NOT NULL,
-  `state_id` int(11) NOT NULL,
-  `last_authenticated` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_carts`
---
-
-CREATE TABLE IF NOT EXISTS `user_carts` (
-`id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `cart_id` int(11) NOT NULL,
-  `active` enum('true','false') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `carts`
---
-ALTER TABLE `carts`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `carts_products`
---
-ALTER TABLE `carts_products`
- ADD PRIMARY KEY (`id`), ADD KEY `cart_id` (`cart_id`,`product_id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
-
---
--- Indexes for table `category_products`
---
-ALTER TABLE `category_products`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `sku` (`sku`);
-
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- Indexes for table `states`
---
-ALTER TABLE `states`
- ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
-
---
--- Indexes for table `user_carts`
---
-ALTER TABLE `user_carts`
- ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`,`cart_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `carts`
---
-ALTER TABLE `carts`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `carts_products`
---
-ALTER TABLE `carts_products`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE `roles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `states`
---
-ALTER TABLE `states`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user_carts`
---
-ALTER TABLE `user_carts`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+<!DOCTYPE HTML><html lang='en' dir='ltr' class='ie ie11'><meta charset="utf-8" /><meta name="robots" content="noindex,nofollow" /><meta http-equiv="X-UA-Compatible" content="IE=Edge"><style id="cfs-style">html{display: none;}</style><link rel="icon" href="favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /><link rel="stylesheet" type="text/css" href="./themes/pmahomme/jquery/jquery-ui-1.9.2.custom.css" /><link rel="stylesheet" type="text/css" href="phpmyadmin.css.php?server=1&amp;token=e5bea9b6b35a5922de2fde353fd8387d&amp;nocache=5690147014ltr" /><title>localhost / 127.0.0.1 | phpMyAdmin 4.3.11</title><script type='text/javascript' src='js/whitelist.php?lang=en&amp;db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d'></script><script type="text/javascript" src="js/get_scripts.js.php?scripts%5B%5D=jquery/jquery-1.8.3.min.js&amp;scripts%5B%5D=sprintf.js&amp;scripts%5B%5D=ajax.js&amp;scripts%5B%5D=keyhandler.js&amp;scripts%5B%5D=jquery/jquery-ui-1.9.2.custom.min.js&amp;scripts%5B%5D=jquery/jquery.cookie.js&amp;scripts%5B%5D=jquery/jquery.mousewheel.js&amp;scripts%5B%5D=jquery/jquery.event.drag-2.2.js&amp;scripts%5B%5D=jquery/jquery-ui-timepicker-addon.js&amp;scripts%5B%5D=jquery/jquery.ba-hashchange-1.3.js&amp;scripts%5B%5D=jquery/jquery.debounce-1.0.5.js&amp;scripts%5B%5D=menu-resizer.js&amp;scripts%5B%5D=cross_framing_protection.js&amp;scripts%5B%5D=rte.js&amp;scripts%5B%5D=tracekit/tracekit.js&amp;scripts%5B%5D=error_report.js&amp;scripts%5B%5D=doclinks.js&amp;scripts%5B%5D=functions.js&amp;scripts%5B%5D=navigation.js&amp;scripts%5B%5D=indexes.js&amp;scripts%5B%5D=common.js&amp;scripts%5B%5D=codemirror/lib/codemirror.js&amp;scripts%5B%5D=codemirror/mode/sql/sql.js&amp;scripts%5B%5D=codemirror/addon/runmode/runmode.js&amp;scripts%5B%5D=codemirror/addon/hint/show-hint.js&amp;scripts%5B%5D=codemirror/addon/hint/sql-hint.js"></script><script type='text/javascript' src='js/messages.php?lang=en&amp;db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d'></script><script type='text/javascript' src='js/get_image.js.php?theme=pmahomme'></script><script type="text/javascript">// <![CDATA[
+PMA_commonParams.setAll({common_query:"?token=e5bea9b6b35a5922de2fde353fd8387d",opendb_url:"db_structure.php",safari_browser:"0",collation_connection:"utf8mb4_unicode_ci",lang:"en",server:"1",table:"",db:"",token:"e5bea9b6b35a5922de2fde353fd8387d",text_dir:"ltr",pma_absolute_uri:"http://localhost/phpmyadmin/",pma_text_default_tab:"Browse",pma_text_left_default_tab:"Structure",LimitChars:"50",pftext:"P",confirm:"1",LoginCookieValidity:"1440",logged_in:"1"});
+AJAX.scriptHandler.add("jquery/jquery-1.8.3.min.js",0).add("whitelist.php?lang=en&amp;db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d",1).add("sprintf.js",1).add("ajax.js",0).add("keyhandler.js",1).add("jquery/jquery-ui-1.9.2.custom.min.js",0).add("jquery/jquery.cookie.js",0).add("jquery/jquery.mousewheel.js",0).add("jquery/jquery.event.drag-2.2.js",0).add("jquery/jquery-ui-timepicker-addon.js",0).add("jquery/jquery.ba-hashchange-1.3.js",0).add("jquery/jquery.debounce-1.0.5.js",0).add("menu-resizer.js",1).add("cross_framing_protection.js",0).add("rte.js",1).add("tracekit/tracekit.js",1).add("error_report.js",1).add("messages.php?lang=en&amp;db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d",0).add("get_image.js.php?theme=pmahomme",0).add("doclinks.js",1).add("functions.js",1).add("navigation.js",0).add("indexes.js",1).add("common.js",1).add("codemirror/lib/codemirror.js",0).add("codemirror/mode/sql/sql.js",0).add("codemirror/addon/runmode/runmode.js",0).add("codemirror/addon/hint/show-hint.js",0).add("codemirror/addon/hint/sql-hint.js",0);
+$(function() {AJAX.fireOnload("whitelist.php?lang=en&amp;db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d");AJAX.fireOnload("sprintf.js");AJAX.fireOnload("keyhandler.js");AJAX.fireOnload("menu-resizer.js");AJAX.fireOnload("rte.js");AJAX.fireOnload("tracekit/tracekit.js");AJAX.fireOnload("error_report.js");AJAX.fireOnload("doclinks.js");AJAX.fireOnload("functions.js");AJAX.fireOnload("indexes.js");AJAX.fireOnload("common.js");});
+// ]]></script><noscript><style>html{display:block}</style></noscript></head><body><div id="pma_navigation"><div id="pma_navigation_resizer"></div><div id="pma_navigation_collapser"></div><div id="pma_navigation_content"><div id="pma_navigation_header"><a class="hide navigation_url" href="navigation.php?ajax_request=1&amp;token=e5bea9b6b35a5922de2fde353fd8387d"></a><!-- LOGO START --><div id="pmalogo">    <a href="index.php?token=e5bea9b6b35a5922de2fde353fd8387d"><img src="./themes/pmahomme/img/logo_left.png" alt="phpMyAdmin" id="imgpmalogo" /></a></div><!-- LOGO END --><!-- LINKS START --><div id="navipanellinks"><a href="index.php?token=e5bea9b6b35a5922de2fde353fd8387d" title="Home"><img src="themes/dot.gif" title="Home" alt="Home" class="icon ic_b_home" /></a><a href="./doc/html/index.html" target="documentation" title="phpMyAdmin documentation"><img src="themes/dot.gif" title="phpMyAdmin documentation" alt="phpMyAdmin documentation" class="icon ic_b_docs" /></a><a href="./url.php?url=http%3A%2F%2Fdev.mysql.com%2Fdoc%2Frefman%2F5.6%2Fen%2Findex.html" target="mysql_doc"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_sqlhelp" /></a><a href="#" id="pma_navigation_reload" title="Reload navigation panel"><img src="themes/dot.gif" title="Reload navigation panel" alt="Reload navigation panel" class="icon ic_s_reload" /></a></div><!-- LINKS ENDS --><img src="./themes/pmahomme/img/ajax_clock_small.gif" title="Loading…" alt="Loading…" style="visibility: hidden; display:none" class="throbber" /></div><div id="pma_navigation_tree" class="list_container synced highlight"><div id="pma_quick_warp"><div class="drop_list"><span title="Recent tables" class="drop_button">Recent</span><ul id="pma_recent_list"><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=users&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`users`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=category_products&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`category_products`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=categories&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`categories`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=products&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`products`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=user_carts&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`user_carts`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=aristocart&amp;table=roles&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`aristocart`.`roles`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=phpmyadmin&amp;table=pma_column_info&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`phpmyadmin`.`pma_column_info`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=phpmyadmin&amp;table=pma_designer_coords&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`phpmyadmin`.`pma_designer_coords`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=phpmyadmin&amp;table=pma_history&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`phpmyadmin`.`pma_history`</a></li><li class="warp_link"><a href="tbl_recent_favorite.php?db=phpmyadmin&amp;table=pma_pdf_pages&amp;token=e5bea9b6b35a5922de2fde353fd8387d">`phpmyadmin`.`pma_pdf_pages`</a></li></ul></div><div class="drop_list"><span title="Favorite tables" class="drop_button">Favorites</span><ul id="pma_favorite_list"><li class="warp_link">There are no favorite tables.</li></ul></div><div class="clearfloat"></div></div><div class="clearfloat"></div><ul><!-- CONTROLS START --><li id="navigation_controls_outer"><div id="navigation_controls"><a href="#" id="pma_navigation_collapse" title="Collapse all"><img src="./themes/pmahomme/img/s_collapseall.png" title="Collapse all" alt="Collapse all" /></a><a href="#" id="pma_navigation_sync" title="Unlink from main panel"><img src="themes/dot.gif" title="Unlink from main panel" alt="Unlink from main panel" class="icon ic_s_link" /></a></div></li><!-- CONTROLS ENDS --></ul><div id='pma_navigation_tree_content'><ul><li class="first new_database italics"><div class='block'><i class='first'></i></div><div class='block'><a href='server_databases.php?server=1&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="" alt="" class="icon ic_b_newdb" /></a></div><a class='hover_show_full' href='server_databases.php?server=1&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title=''>New</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.YXJpc3RvY2FydA==</span><span class='hide vPath'>cm9vdA==.YXJpc3RvY2FydA==</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=aristocart&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=aristocart&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>aristocart</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.Y2Rjb2w=</span><span class='hide vPath'>cm9vdA==.Y2Rjb2w=</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=cdcol&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=cdcol&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>cdcol</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.aW5mb3JtYXRpb25fc2NoZW1h</span><span class='hide vPath'>cm9vdA==.aW5mb3JtYXRpb25fc2NoZW1h</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=information_schema&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=information_schema&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>information_schema</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.bXlzcWw=</span><span class='hide vPath'>cm9vdA==.bXlzcWw=</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=mysql&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=mysql&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>mysql</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.cGVyZm9ybWFuY2Vfc2NoZW1h</span><span class='hide vPath'>cm9vdA==.cGVyZm9ybWFuY2Vfc2NoZW1h</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=performance_schema&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=performance_schema&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>performance_schema</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.cGhwbXlhZG1pbg==</span><span class='hide vPath'>cm9vdA==.cGhwbXlhZG1pbg==</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=phpmyadmin&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=phpmyadmin&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>phpmyadmin</a><div class="clearfloat"></div></li><li class="database"><div class='block'><i></i><b></b><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.dGVzdA==</span><span class='hide vPath'>cm9vdA==.dGVzdA==</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=test&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=test&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>test</a><div class="clearfloat"></div></li><li class="last database"><div class='block'><i></i><a class="expander" href='#'><span class='hide aPath'>cm9vdA==.d2ViYXV0aA==</span><span class='hide vPath'>cm9vdA==.d2ViYXV0aA==</span><span class='hide pos'>0</span><img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus" /></a></div><div class='block'><a href='db_operations.php?server=1&amp;db=webauth&amp;token=e5bea9b6b35a5922de2fde353fd8387d'><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db" /></a></div><a class='hover_show_full' href='db_structure.php?server=1&amp;db=webauth&amp;token=e5bea9b6b35a5922de2fde353fd8387d' title='Structure'>webauth</a><div class="clearfloat"></div></li></ul></div></div></div><div class="pma_drop_handler">Drop files here</div><div class="pma_sql_import_status"><h2>SQL upload ( <span class="pma_import_count">0</span> ) <span class="close">x</span><span class="minimize">-</span></h2><div></div></div></div><noscript><div class="error"><img src="themes/dot.gif" title="" alt="" class="icon ic_s_error" /> Javascript must be enabled past this point!</div></noscript><div id='floating_menubar'></div><div id='serverinfo'><img src="themes/dot.gif" title="" alt="" class="icon ic_s_host item" /><a href="index.php?token=e5bea9b6b35a5922de2fde353fd8387d" class="item">Server: 127.0.0.1</a><div class="clearfloat"></div></div><div id="topmenucontainer" class="menucontainer"><ul id="topmenu"  class="resizable-menu"><li><a class="tab" href="server_databases.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Databases" alt="Databases" class="icon ic_s_db" /> Databases</a></li><li><a class="tab" href="server_sql.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="SQL" alt="SQL" class="icon ic_b_sql" /> SQL</a></li><li><a class="tab" href="server_status.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Status" alt="Status" class="icon ic_s_status" /> Status</a></li><li><a class="tab" href="server_privileges.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d&amp;viewing_mode=server" ><img src="themes/dot.gif" title="Users" alt="Users" class="icon ic_s_rights" /> Users</a></li><li><a class="tab" href="server_export.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Export" alt="Export" class="icon ic_b_export" /> Export</a></li><li><a class="tab" href="server_import.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Import" alt="Import" class="icon ic_b_import" /> Import</a></li><li><a class="tab" href="prefs_manage.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Settings" alt="Settings" class="icon ic_b_tblops" /> Settings</a></li><li><a class="tab" href="server_replication.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Replication" alt="Replication" class="icon ic_s_replication" /> Replication</a></li><li><a class="tab" href="server_variables.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Variables" alt="Variables" class="icon ic_s_vars" /> Variables</a></li><li><a class="tab" href="server_collations.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Charsets" alt="Charsets" class="icon ic_s_asci" /> Charsets</a></li><li><a class="tab" href="server_engines.php?db=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" ><img src="themes/dot.gif" title="Engines" alt="Engines" class="icon ic_b_engine" /> Engines</a></li><div class="clearfloat"></div></ul>
+</div>
+<span id="lock_page_icon"></span><a id="goto_pagetop" href="#" title="Click on the bar to scroll to top of page"><img src="themes/dot.gif" title="" alt="" class="icon ic_s_top" /></a><script type="text/javascript" src="js/get_scripts.js.php?scripts%5B%5D=codemirror/lib/codemirror.js&amp;scripts%5B%5D=codemirror/mode/sql/sql.js&amp;scripts%5B%5D=codemirror/addon/runmode/runmode.js&amp;scripts%5B%5D=codemirror/addon/hint/show-hint.js&amp;scripts%5B%5D=codemirror/addon/hint/sql-hint.js&amp;scripts%5B%5D=console.js"></script><script type="text/javascript">// <![CDATA[
+AJAX.scriptHandler.add("codemirror/lib/codemirror.js",0).add("codemirror/mode/sql/sql.js",0).add("codemirror/addon/runmode/runmode.js",0).add("codemirror/addon/hint/show-hint.js",0).add("codemirror/addon/hint/sql-hint.js",0).add("console.js",1);
+$(function() {AJAX.fireOnload("console.js");});
+// ]]></script><div id="pma_console_container"><div id="pma_console"><div class="toolbar collapsed"><div class="switch_button console_switch"><img src="themes/dot.gif" title="SQL Query Console" alt="SQL Query Console" class="icon ic_console" /><span>Console</span></div><div class="button clear"><span>Clear</span></div><div class="button history"><span>History</span></div><div class="button options"><span>Options</span></div><div class="button bookmarks"><span>Bookmarks</span></div></div><div class="content"><div class="console_message_container"><div class="message welcome"><span>Press Ctrl+Enter to execute query</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="categories"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `categories`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="categories"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `categories`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="category_products"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `category_products`</span></div><div class="message history collapsed hide select" targetdb="aristocart" targettable="users"><div class="action_content"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span>aristocart</span></span> <span class="text query_time">Queried time: <span>During current session</span></span> </div><span class="query">SELECT * FROM `users`</span></div></div><div class="query_input"><span class="console_query_input"></span></div></div><div class="mid_layer"></div><div class="card" id="pma_bookmarks"><div class="toolbar"><div class="switch_button"><span>Bookmarks</span></div><div class="button refresh"><span>Refresh</span></div><div class="button add"><span>Add</span></div></div><div class="content bookmark"><div class="message welcome"><span>No bookmarks</span></div></div><div class="mid_layer"></div><div class="card add"><div class="toolbar"><div class="switch_button"><span>Add bookmark</span></div></div><div class="content add_bookmark"><div class="options"><label>Label: <input type="text" name="label"></label> <label>Target database: <input type="text" name="targetdb"></label> <label><input type="checkbox" name="shared">Share this bookmark</label><button type="submit" name="submit">Ok</button></div><div class="query_input"><span class="bookmark_add_input"></span></div></div></div></div><div class="card" id="pma_console_options"><div class="toolbar"><div class="switch_button"><span>Options</span></div><div class="button default"><span>Set default</span></div></div><div class="content"><label><input type="checkbox" name="always_expand">Always expand query messages</label><br><label><input type="checkbox" name="start_history">Show query history at start</label><br><label><input type="checkbox" name="current_query">Show current browsing query</label><br></div></div><div class="templates"><div class="query_actions"><span class="action collapse">Collapse</span> <span class="action expand">Expand</span> <span class="action requery">Requery</span> <span class="action edit">Edit</span> <span class="action explain">Explain</span> <span class="action profiling">Profiling</span> <span class="action bookmark">Bookmark</span> <span class="text failed">Query failed</span> <span class="text targetdb">Database: <span></span></span> <span class="text query_time">Queried time: <span></span></span> </div></div></div></div><div id="page_content"><!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>phpMyAdmin</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+    <!--
+    html {
+        padding: 0;
+        margin: 0;
+    }
+    body  {
+        font-family: sans-serif;
+        font-size: small;
+        color: #000000;
+        background-color: #F5F5F5;
+        margin: 1em;
+    }
+    h1 {
+        margin: 0;
+        padding: 0.3em;
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #ff0000;
+    }
+    p {
+        margin: 0;
+        padding: 0.5em;
+        border: 0.1em solid red;
+        background-color: #ffeeee;
+    }
+    //-->
+    </style>
+</head>
+<body>
+<h1>phpMyAdmin - Error</h1>
+<p>export.php: Missing parameter: export_type&lt;a href="./doc/html/faq.html#faqmissingparameters" target="documentation"&gt;&lt;img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help" /&gt;&lt;/a&gt;<br /></p>
+</body>
+</html>
+</div><div id="selflink" class="print_ignore"><a href="export.php?db=&amp;table=&amp;server=1&amp;target=&amp;token=e5bea9b6b35a5922de2fde353fd8387d" title="Open new phpMyAdmin window" target="_blank"><img src="themes/dot.gif" title="Open new phpMyAdmin window" alt="Open new phpMyAdmin window" class="icon ic_window-new" /></a></div><div class="clearfloat" id="pma_errors"><div class="notice"><strong>Notice</strong> in .\export.php#162<br />
+<img src="themes/dot.gif" title="" alt="" class="icon ic_s_notice" /> Undefined index: what<br />
+<br />
+<strong>Backtrace</strong><br />
+<br />
+</div><form method="post" action="error_report.php" id="pma_report_errors_form"><input type="hidden" name="token" value="e5bea9b6b35a5922de2fde353fd8387d"/><input type="hidden" name="exception_type" value="php"/><input type="hidden" name="send_error_report" value="1" /><input type="submit" value="Report" id="pma_report_errors" style="float: right; margin: 20px;"><input type="checkbox" name="always_send" id="always_send_checkbox" value="true"/><label for="always_send_checkbox">Automatically send report next time</label></form><input type="submit" value="Ignore" id="pma_ignore_errors_bottom" style="float: right; margin: 20px;"><input type="submit" value="Ignore All" id="pma_ignore_all_errors_bottom" style="float: right; margin: 20px;"></div><script type="text/javascript">// <![CDATA[
+PMA_ajaxShowMessage(PMA_messages["phpErrorsFound"]);$("#pma_ignore_errors_popup").bind("click", function() {
+                            PMA_ignorePhpErrors()
+                        });$("#pma_ignore_all_errors_popup").bind("click",
+                            function() {
+                                PMA_ignorePhpErrors(false)
+                            });$("#pma_ignore_errors_bottom").bind("click", function() {
+                            PMA_ignorePhpErrors()
+                        });$("#pma_ignore_all_errors_bottom").bind("click",
+                            function() {
+                                PMA_ignorePhpErrors(false)
+                            });$("html, body").animate({
+                            scrollTop:$(document).height()
+                        }, "slow");
+AJAX.scriptHandler;
+$(function() {});
+// ]]></script></body></html>

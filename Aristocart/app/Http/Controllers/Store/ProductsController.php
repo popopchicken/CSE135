@@ -36,6 +36,9 @@ class ProductsController extends Controller {
 				$data['products'] = self::search();
 				return view('store/products')->with('data', $data);
 				break;
+			case "search-browse":
+				
+				break;
 			case "addProduct":
 				$data['errors'] = self::addProduct();
 				if(empty($errors)){
