@@ -35,7 +35,7 @@
 								<br />
 								Price: ${{$product->price}}
 								<br />
-								<form method="POST" role="form" name="search_form" action="{{ url('store/product-order') }}">
+								<form method="POST" role="form" action="{{ url('store/product-order') }}">
 									<input type="hidden" name="action" value="add-to-cart">
 									<input type="hidden" name="productId" value="{{$product->product_id}}">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">

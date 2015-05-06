@@ -41,6 +41,10 @@ class ProductBrowsingController extends Controller {
 				$data['products'] = self::search();
 				return view('store/product-browsing')->with('data', $data);
 				break;
+			case "add-to-cart":
+				$data['productId'] = Request::input('productId');
+				return view('store/product-order')->with('data', $data);
+
 		}
 		return redirect('store/product-browsing')->with('data', $data);
 	}
