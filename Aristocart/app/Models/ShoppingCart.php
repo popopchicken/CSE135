@@ -56,7 +56,6 @@ class ShoppingCart {
 	}
 
 	public function getCartTotal(){
-		$results = DB::select('SELECT total_price FROM carts WHERE id = ?',[$this->cartId]);
 		$sum = DB::select('SELECT SUM(c.quantity * p.price) AS sum FROM carts_products AS c RIGHT JOIN products AS p ON c.product_id = p.id WHERE c.cart_id = ?', [$this->cartId]);
 		$this->cartTotal = $sum[0]->sum;
 	}
