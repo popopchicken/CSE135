@@ -6,6 +6,8 @@ use Illuminate\Http\RedirectResponse;
 use Response;
 use View;
 use URL;
+use Session; 
+use Redirect;
 
 class LoginController extends Controller {
 	/*
@@ -49,7 +51,7 @@ class LoginController extends Controller {
 		if( !empty($errors) ){
 			return redirect('login')->with('errors', $errors);
 		} 
-		return redirect('home');
+		return Redirect::to('home');
 	}
 
 	public function logout(){

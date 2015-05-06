@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Response;
 use View;
 use URL;
+use Session; 
 
 class ProductsController extends Controller {
 	public $selectedCategory;
@@ -125,6 +126,7 @@ class ProductsController extends Controller {
 		$data['role'] = $role;
 		$data['products'] = $products;
 		$data['count'] = 0;
+		$data['name'] = Session::get('user_name'); 
 		return $data;
 	}
 }

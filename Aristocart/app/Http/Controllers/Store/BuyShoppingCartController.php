@@ -66,6 +66,8 @@ class BuyShoppingCartController extends Controller {
 		$products = $this->shoppingCart->doesCartHaveItems();
 		$data['products'] = $products;
 		$data['cart_total'] = $this->shoppingCart->cartTotal;
+		$data['name'] = Session::get('user_name');
+		$data['role'] = $role; 
 		return $data;
 	}
 

@@ -8,6 +8,7 @@ use App\HTTP\Requests\LoginFormRequest;
 use Response;
 use Request;
 use View;
+use Session; 
 
 class ProductBrowsingController extends Controller {
 
@@ -73,6 +74,7 @@ class ProductBrowsingController extends Controller {
 		$data['categories'] = $categories;
 		$data['role'] = $role;
 		$data['products'] = $products;
+		$data['name'] = Session::get('user_name'); 
 		return $data;
 	}
 

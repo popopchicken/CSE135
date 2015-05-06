@@ -29,7 +29,7 @@ class Authenticate{
 			if($results){
 				Session::put('user_id', $results[0]->id);
 				Session::put('user_role', $results[0]->role_type);
-				Session::put('user_name', $results[0]->name);
+				Session::put('user_name', $user->name);
 				$time = date("Y-m-d H:i:s");
 				DB::update('UPDATE users SET last_authenticated = ? WHERE id = ?', [$time, Session::get('user_id')]);
 				return $errors;

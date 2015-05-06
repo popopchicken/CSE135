@@ -5,6 +5,7 @@
 		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	</head>
 	<body>
+		<!--Navbar-->
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -18,14 +19,17 @@
 					@endif
 					<li> <a href="{{ url('/store/product-browsing') }}"> Products Browsing </a> </li>
 					<li> <a href="{{ url('/store/product-order') }}"> Product Order</a> </li>
-					<li> <a href="#"> Buy Shopping Cart</a> </li>
+					<li> <a href="{{ url('/store/buy-shopping-cart') }}"> Buy Shopping Cart</a> </li>
 					<li> <a href="{{ url('/logout') }}"> Logout </a> </li>
 				</ul>
+				<div class="nav navbar-nav navbar-right navbar-brand">
+						Hello {{ $data['name'] }} 
+				</div>
 			</div>
 		</nav>
 
 		<center> 
-			<h1> <strong> Hello {{ $data['name'] }}. You have logged in successfully! </strong> </h1>
+			<h1> <strong> You have logged in successfully! </strong> </h1>
 		</center>
 
 		<!-- Bootstrap -->
