@@ -10,6 +10,8 @@ use Response;
 use View;
 use URL;
 use Auth;
+use Redirect;
+use DB;
 
 class CategoryController extends Controller {
 
@@ -41,30 +43,37 @@ class CategoryController extends Controller {
 	public function index()
 	{
 		Authenticate::checkExpiredLogin();
-		return view('store/categories');
+		$categories = Category::showCategories();
+		return View::make('store/categories')->with('categories', $categories);
 	}
 
 	public function addCategories()
 	{
 		$name = Request::input('cat_name');
 		$description = Request::input('cat_description');
-		//$id = Auth::id();
 
 		$category = new Category();
 		$category->cat_name = $name;
 		$category->cat_description = $description;
-		//$category->userID = $id;
 
+		$duplicate = $category->checkDuplicate();
+		if($duplicate){
+			$message = "Category already exists";
+			return Redirect::back()->with('message', $message);
+		}
 		if(is_null($name) || is_null($description)){
-			return view('store/categories');
+			return Redirect::back()->with('message','Addition Unsuccessful! Please enter a category name and/or description.');
 		}
 		else{
 			$category->addCategory();
-			return view('store/categories');
+			return Redirect::back()->with('message','Addition Successful !');
+			//return View::make('store/categories');
 		}
+	}
 
-
-		return view('store/categories');
+	public function deleteCategories()
+	{
+		
 	}
 
 }
